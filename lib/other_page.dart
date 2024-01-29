@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sync_provider_for_async_apis/main.dart';
 
 class OtherPage extends StatelessWidget {
   const OtherPage({super.key});
@@ -9,10 +11,17 @@ class OtherPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Other'),
       ),
-      body: const Center(
-        child: Text(
-          '0',
-          style: TextStyle(fontSize: 52),
+      body: Center(
+        child: Consumer(
+          builder: (context, ref, child) {
+            final preferences = ref.watch(sharedPreferencesProvider);
+            final val = preferences.getInt('counter');
+
+            return Text(
+              '$val',
+              style: const TextStyle(fontSize: 52),
+            );
+          },
         ),
       ),
     );
