@@ -15,6 +15,8 @@ SharedPreferences sharedPreferences(SharedPreferencesRef ref) {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
+  // main에 runApp함수 실행 전에 SharedPreferences Instance를 async하게 생성한 후
+  // SharedPreferences Provider의 value를 UnimplementedError에서 SharedPreferences Instance로 교체하는 형태로 만듭니다.
   runApp(
     ProviderScope(
       overrides: [sharedPreferencesProvider.overrideWithValue(prefs)],

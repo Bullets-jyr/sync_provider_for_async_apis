@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'counter_provider.dart';
 import 'other_page.dart';
 
 class MyHomePage extends ConsumerWidget {
@@ -8,6 +9,8 @@ class MyHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final counter = ref.watch(counterProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Scope: Sync-Async'),
@@ -16,9 +19,9 @@ class MyHomePage extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              '0',
-              style: TextStyle(fontSize: 52),
+            Text(
+              '$counter',
+              style: const TextStyle(fontSize: 52),
             ),
             const SizedBox(height: 20.0),
             FilledButton(
@@ -40,7 +43,9 @@ class MyHomePage extends ConsumerWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          ref.read(counterProvider.notifier).increment();
+        },
         child: const Icon(Icons.add),
       ),
     );
